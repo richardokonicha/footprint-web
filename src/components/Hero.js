@@ -9,11 +9,13 @@ import {
     Icon,
     useColorModeValue,
     createIcon,
-} from '@chakra-ui/react';
-import { FcGoogle } from 'react-icons/fc';
+} from '@chakra-ui/react'
+import { FcGoogle } from 'react-icons/fc'
+import { signInWithGoogle } from '../services/firebaseClient'
+
+
 const Hero = () => {
     return (
-
         <Container maxW={'3xl'}>
             <Stack
                 as={Box}
@@ -40,30 +42,16 @@ const Hero = () => {
                     align={'center'}
                     alignSelf={'center'}
                     position={'relative'}>
-                    {/* 
-                    <Button
-                        colorScheme={'green'}
-                        bg={'green.400'}
-                        rounded={'full'}
-                        px={6}
-                        _hover={{
-                            bg: 'green.500',
-                        }}>
-                        Get Started
-                    </Button> */}
-
                     <Button
                         w={'full'}
                         variant={'outline'}
+                        onClick={signInWithGoogle}
                         leftIcon={<FcGoogle />}>
+
                         <Center>
                             <Text>Sign in with Google</Text>
                         </Center>
                     </Button>
-
-                    {/* <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-                        Learn more
-                    </Button> */}
                     <Box>
                         <Icon
                             as={Arrow}
@@ -100,6 +88,6 @@ const Arrow = createIcon({
             fill="currentColor"
         />
     ),
-});
+})
 
 export default Hero

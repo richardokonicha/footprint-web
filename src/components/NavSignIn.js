@@ -25,6 +25,9 @@ import {
     ChevronRightIcon,
 } from '@chakra-ui/icons';
 
+import firebase, { auth, db, provider, signInWithGoogle } from '../services/firebaseClient'
+
+
 export default function WithSubnavigation() {
     const { isOpen, onToggle } = useDisclosure();
 
@@ -78,7 +81,7 @@ export default function WithSubnavigation() {
                         variant={'link'}
                         href={'#'}>
                         Sign In
-                    </Button>
+                    </Button>signInWithGoogle
                     <Button
                         display={{ base: 'none', md: 'inline-flex' }}
                         fontSize={'sm'}
@@ -94,6 +97,7 @@ export default function WithSubnavigation() {
                     <Button
                         w={'full'}
                         variant={'outline'}
+                        onClick={signInWithGoogle}
                         leftIcon={<FcGoogle />}>
                         <Center>
                             <Text>Sign in with Google</Text>
