@@ -1,17 +1,13 @@
-import MainLayout from './layouts/MainLayout'
-import NavSigned from './components/NavSigned'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import NavSigned from "./components/NavSigned";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <MainLayout>
       <RouteApp />
     </MainLayout>
-  )
+  );
 }
 
 export default App;
@@ -34,9 +30,8 @@ const RouteApp = () => {
         </Switch>
       </div>
     </Router>
-  )
-}
-
+  );
+};
 
 function Home() {
   return <h2>Home</h2>;
@@ -47,5 +42,5 @@ function Projects() {
 }
 
 function Dashboard() {
-  return <h2>Dashboard</h2>;
+  return <h2>Dashboard Link</h2>;
 }
