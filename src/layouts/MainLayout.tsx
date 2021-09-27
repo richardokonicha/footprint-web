@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { extendTheme } from "@chakra-ui/react"
 import { ChakraProvider } from "@chakra-ui/react"
 import { auth } from '../services/firebaseClient'
@@ -15,7 +16,11 @@ const colors = {
 }
 const theme = extendTheme({ colors })
 
-const MainLayout = ({ children }) => {
+interface Props {
+  // any props that come into the component
+}
+
+const MainLayout:  FC<Props> = ({ children }) => {
   const [user, loading, error] = useAuthState(auth)
   return (
     <ChakraProvider theme={theme}>
