@@ -1,35 +1,21 @@
+import { AddIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
-    Box,
-    Flex,
-    Avatar,
-    HStack,
-    Link,
-    IconButton,
-    Button,
-    Menu,
-    MenuButton,
-    MenuList,
-    Text,
-    MenuItem,
-    MenuDivider,
-    useDisclosure,
-    useColorModeValue,
-    Stack,
+    Avatar, Box, Button, Flex, HStack, IconButton, Link, Menu,
+    MenuButton, MenuDivider, MenuItem, MenuList, Stack, Text, useColorModeValue, useDisclosure
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import { signOut } from '../services/firebaseClient'
-import { Link as LinkRouter } from "react-router-dom"
-import { auth } from '../services/firebaseClient'
+import { ReactNode } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { Link as LinkRouter } from "react-router-dom"
+import { auth, signOut } from '../services/firebaseClient'
 
 const Links = [
-    { id: 3, name: 'Home', route: '/' },
+    // { id: 3, name: 'Home', route: '/' },
     { id: 1, name: 'Dashboard', route: '/dashboard' },
     { id: 2, name: 'Projects', route: '/projects' },
 
 ]
 
-const NavLink = ({ children, to }) => (
+const NavLink = ({ children, to }: { children: ReactNode; to: string; }) => (
     <Link
         to={to}
         as={LinkRouter}

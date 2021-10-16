@@ -1,31 +1,16 @@
 import {
-    Box,
-    Flex,
-    Text,
-    IconButton,
-    Button,
-    Stack,
-    Collapse,
-    Icon,
-    Center,
-    Link,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    useColorModeValue,
-    useBreakpointValue,
-    useDisclosure,
-} from '@chakra-ui/react';
-import { FcGoogle } from 'react-icons/fc';
-
-import {
-    HamburgerIcon,
-    CloseIcon,
     ChevronDownIcon,
-    ChevronRightIcon,
+    ChevronRightIcon, CloseIcon, HamburgerIcon
 } from '@chakra-ui/icons';
+import {
+    Box, Button, Center, Collapse, Flex, Icon, IconButton, Link,
+    Popover, PopoverContent, PopoverTrigger, Stack, Text, useBreakpointValue, useColorModeValue, useDisclosure
+} from '@chakra-ui/react';
+import { ReactNode } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { signInWithGoogle } from '../services/firebaseClient';
 
-import firebase, { auth, db, provider, signInWithGoogle } from '../services/firebaseClient'
+
 
 
 export default function WithSubnavigation() {
@@ -160,7 +145,7 @@ const DesktopNav = () => {
     );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }) => {
+const DesktopSubNav = ({ label, href, subLabel }: { label: string, href: string, subLabel: string}) => {
     return (
         <Link
             href={href}
@@ -207,10 +192,10 @@ const MobileNav = () => {
     );
 };
 
-const MobileNavItem = ({ label, children, href }) => {
+const MobileNavItem = ({ label, children, href }: { label?: string; children?: ReactNode; href?: string;}) => {
     const { isOpen, onToggle } = useDisclosure();
 
-    return (
+    return ( 
         <Stack spacing={4} onClick={children && onToggle}>
             <Flex
                 py={2}

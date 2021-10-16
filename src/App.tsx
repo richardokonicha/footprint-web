@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Projects from './projects/projects-list'
 
 function App() {
   return (
@@ -26,11 +27,11 @@ const RouteApp = () => {
           <Route path="/dashboard">
             <Dashboard />
           </Route>
-          <Route path="/projects">
+          {/* <Route path="/projects">
             <Projects />
-          </Route>
+          </Route> */}
           <Route path="/">
-            <Home />
+            <Projects />
           </Route>
         </Switch>
       </div>
@@ -43,9 +44,7 @@ function Home() {
   return <h2>Home</h2>;
 }
 
-function Projects() {
-  return <h2>Projects</h2>;
-}
+
 
 function Dashboard() {
   return <h2>Dashboard</h2>;
