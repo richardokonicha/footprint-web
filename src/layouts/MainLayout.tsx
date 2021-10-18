@@ -1,27 +1,17 @@
-import React, { FC } from "react";
-import { extendTheme } from "@chakra-ui/react"
+import React from "react";
 import { ChakraProvider } from "@chakra-ui/react"
-import { auth } from '../services/firebaseClient'
+// import { auth } from '../services/firebaseClient'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { getAuth } from "firebase/auth";
+
 import UserContext from "../context/UserContext"
 import Landing from "../pages/Landing"
 import { Progress } from "@chakra-ui/react"
+import theme from '../theme'
 
-const colors = {
-  brand: {
-    900: "#1a365d",
-    800: "#153e75",
-    700: "#2a69ac",
-  },
-}
-const theme = extendTheme({ colors })
-
-interface Props {
-  // any props that come into the component
-}
-
-const MainLayout:  FC<Props> = ({ children }) => {
-  const [user, loading, error] = useAuthState(auth)
+const MainLayout: React.FC = ({ children }) => {
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth)
   return (
     <ChakraProvider theme={theme}>
       {loading ? (<Progress hasStripe isAnimated colorScheme="green" size="sm" value={100} />) : (null)}

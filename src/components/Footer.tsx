@@ -1,8 +1,6 @@
 import {
     Box,
-    chakra,
     Container,
-    Link,
     Stack,
     Text,
     useColorModeValue,
@@ -35,7 +33,7 @@ const SocialButton = ({
     href,
 }) => {
     return (
-        <chakra.button
+        <Box
             bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
             rounded={'full'}
             w={8}
@@ -52,7 +50,7 @@ const SocialButton = ({
             }}>
             <VisuallyHidden>{label}</VisuallyHidden>
             {children}
-        </chakra.button>
+        </Box>
     );
 };
 

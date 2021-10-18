@@ -56,7 +56,7 @@ export default function WithSubnavigation() {
 
                 <Stack
                     flex={{ base: 1, md: 0 }}
-                    justify={'flex-end'} chakra
+                    justify={'flex-end'}
                     direction={'row'}
                     spacing={6}>
                     {/* <Button
@@ -145,7 +145,7 @@ const DesktopNav = () => {
     );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }: { label: string, href: string, subLabel: string}) => {
+const DesktopSubNav = ({ label, href, subLabel }: { label: string, href: string, subLabel: string }) => {
     return (
         <Link
             href={href}
@@ -192,10 +192,10 @@ const MobileNav = () => {
     );
 };
 
-const MobileNavItem = ({ label, children, href }: { label?: string; children?: ReactNode; href?: string;}) => {
+const MobileNavItem = ({ label, children, href }: { label?: string; children?: ReactNode; href?: string; }) => {
     const { isOpen, onToggle } = useDisclosure();
 
-    return ( 
+    return (
         <Stack spacing={4} onClick={children && onToggle}>
             <Flex
                 py={2}

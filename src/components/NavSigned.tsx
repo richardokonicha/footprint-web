@@ -6,7 +6,7 @@ import {
 import { ReactNode } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Link as LinkRouter } from "react-router-dom"
-import { auth, signOut } from '../services/firebaseClient'
+import { auth, signOutfn } from '../services/firebaseClient'
 
 const Links = [
     // { id: 3, name: 'Home', route: '/' },
@@ -59,7 +59,7 @@ export default function WithAction() {
                     <Flex alignItems={'center'}>
                         <Button
                             variant={'solid'}
-                            colorScheme={'teal'}
+                            colorScheme={'blueprint'}
                             size={'sm'}
                             mr={4}
                             leftIcon={<AddIcon />}>
@@ -68,6 +68,7 @@ export default function WithAction() {
                         <Menu>
                             <MenuButton
                                 as={Button}
+                                color={'blueprint'}
                                 rounded={'full'}
                                 variant={'link'}
                                 cursor={'pointer'}>
@@ -80,7 +81,7 @@ export default function WithAction() {
                                 <MenuItem>Link 1</MenuItem>
                                 <MenuItem>Link 2</MenuItem>
                                 <MenuDivider />
-                                <MenuItem onClick={signOut}>Sign out<Text fontSize="xs" p={2}>({user.displayName})</Text></MenuItem>
+                                <MenuItem onClick={signOutfn}>Sign out<Text fontSize="xs" p={2}>({user.displayName})</Text></MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>

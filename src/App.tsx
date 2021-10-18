@@ -6,13 +6,18 @@ import {
   Route,
 } from "react-router-dom";
 import Projects from './projects/projects-list'
+import { doc, getFirestore } from 'firebase/firestore';
+import { FirestoreProvider, useFirestoreDocData, useFirestore, useFirebaseApp } from 'reactfire';
 
 function App() {
+  const firestoreInstance = getFirestore(useFirebaseApp());
   return (
+    <FirestoreProvider sdk={firestoreInstance}>
+      <MainLayout>
+        <RouteApp />
+      </MainLayout>
+    </FirestoreProvider>
 
-    <MainLayout>
-      <RouteApp />
-    </MainLayout>
   )
 }
 
@@ -38,12 +43,6 @@ const RouteApp = () => {
     </Router>
   )
 }
-
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
 
 
 function Dashboard() {
