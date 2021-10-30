@@ -8,6 +8,11 @@ import {
 import Projects from './projects/projects-list'
 import { doc, getFirestore } from 'firebase/firestore';
 import { FirestoreProvider, useFirestoreDocData, useFirestore, useFirebaseApp } from 'reactfire';
+import {
+  Link,
+  useParams
+} from "react-router-dom";
+import ProjectDetail from './projects/projects-detail'
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp());
@@ -35,6 +40,10 @@ const RouteApp = () => {
           {/* <Route path="/projects">
             <Projects />
           </Route> */}
+
+          <Route path="/projects/:projectId">
+            <ProjectDetail />
+          </Route>
           <Route path="/">
             <Projects />
           </Route>

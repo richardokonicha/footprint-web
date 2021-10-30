@@ -1,12 +1,13 @@
 import { AddIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
-    Avatar, Box, Button, Flex, HStack, IconButton, Link, Menu,
+    Avatar, Box, Button, Flex, HStack, IconButton, Link, Menu, Spacer,
     MenuButton, MenuDivider, MenuItem, MenuList, Stack, Text, useColorModeValue, useDisclosure
 } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Link as LinkRouter } from "react-router-dom"
 import { auth, signOutfn } from '../services/firebaseClient'
+import logo from './logo1.png'
 
 const Links = [
     // { id: 3, name: 'Home', route: '/' },
@@ -36,56 +37,52 @@ export default function WithAction() {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                    <IconButton
-                        size={'md'}
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        aria-label={'Open Menu'}
-                        display={{ md: 'none' }}
-                        onClick={isOpen ? onClose : onOpen}
-                    />
-                    <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
-                        <HStack
-                            as={'nav'}
-                            spacing={4}
-                            display={{ base: 'none', md: 'flex' }}>
-                            {Links.map((link) => (
-                                <NavLink to={link.route} key={link.id}>{link.name}</NavLink>
-                            ))}
-                        </HStack>
-                    </HStack>
-                    <Flex alignItems={'center'}>
-                        <Button
-                            variant={'solid'}
-                            colorScheme={'blueprint'}
-                            size={'sm'}
-                            mr={4}
-                            leftIcon={<AddIcon />}>
-                            Action
-                        </Button>
-                        <Menu>
-                            <MenuButton
-                                as={Button}
-                                color={'blueprint'}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}>
-                                <Avatar
-                                    size={'sm'}
-                                    src={user.photoURL}
-                                />
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem onClick={signOutfn}>Sign out<Text fontSize="xs" p={2}>({user.displayName})</Text></MenuItem>
-                            </MenuList>
-                        </Menu>
-                    </Flex>
-                </Flex>
+            <HStack px={[0, 4]} shadow="md" h={14}>
+                <IconButton
+                    size={'md'}
+                    icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                    aria-label={'Open Menu'}
+                    display={{ md: 'none' }}
+                    onClick={isOpen ? onClose : onOpen}
+                />
+                <Avatar name="Foot print" src={logo} colorScheme="blackAlpha" size="xs" />
+                <Box
+                    as={'nav'}
+                    display={{ base: 'none', md: 'flex' }}>
+                    {Links.map((link) => (
+                        <NavLink to={link.route} key={link.id}>{link.name}</NavLink>
+                    ))}
+                </Box>
+                <Spacer />
+                <>
+                    <Button
+                        variant={'solid'}
+                        colorScheme={'blueprint'}
+                        size={'sm'}
+                        mr={4}
+                        leftIcon={<AddIcon />}>
+                        Create new project
+                    </Button>
+                    <Menu>
+                        <MenuButton
+                            as={Button}
+                            color={'blueprint'}
+                            rounded={'full'}
+                            variant={'link'}
+                            cursor={'pointer'}>
+                            <Avatar
+                                size={'sm'}
+                                src={user.photoURL}
+                            />
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem>Link 1</MenuItem>
+                            <MenuItem>Link 2</MenuItem>
+                            <MenuDivider />
+                            <MenuItem onClick={signOutfn}>Sign out<Text fontSize="xs" p={2}>({user.displayName})</Text></MenuItem>
+                        </MenuList>
+                    </Menu>
+                </>
 
                 {isOpen ? (
                     <Box pb={4} display={{ md: 'none' }}>
@@ -96,7 +93,7 @@ export default function WithAction() {
                         </Stack>
                     </Box>
                 ) : null}
-            </Box>
+            </HStack>
         </>
     )
 }

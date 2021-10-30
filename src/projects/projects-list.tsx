@@ -1,18 +1,18 @@
-import { Box, Flex, Modal, useToast, ModalContent, ModalFooter, ModalCloseButton, ModalBody, ModalOverlay, IconButton, useDisclosure, Wrap, Center, WrapItem, Stack, Grid, Heading, Spacer, Tag, Text, HStack, Progress, ModalHeader, Button, Input } from '@chakra-ui/react';
-import { firestore } from '../services/firebaseClient'
-import { collection, addDoc, getDocs, doc } from "firebase/firestore";
-import { useFirestoreDocData, useFirestore, useFirebaseApp, useFirestoreCollectionData } from 'reactfire';
-import { PhoneIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
+import { Box, Flex, Modal, useToast, ModalContent, ModalFooter, ModalCloseButton, ModalBody, ModalOverlay, IconButton, useDisclosure, Center, Spacer, Tag, Text, HStack, Progress, ModalHeader, Button, Input } from '@chakra-ui/react';
+import { collection, addDoc, doc } from "firebase/firestore";
+import { useFirestore, useFirestoreCollectionData } from 'reactfire';
+import { AddIcon } from '@chakra-ui/icons'
 import { Formik } from 'formik'
 import {
     Link,
+    useParams
 } from "react-router-dom";
 
 
 function Projects() {
     const toast = useToast()
     const firestore = useFirestore()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen: onOpenNew, onClose } = useDisclosure()
     const projectRef = collection(firestore, 'projects')
     const { status, data: value, error } = useFirestoreCollectionData(projectRef)
     const addProject = ({ name, description }: { name: string, description: string }) => {
@@ -32,6 +32,7 @@ function Projects() {
         )
         onClose()
     }
+    console.log(value)
     return (
         <Box>
             {error && <strong>Error: {JSON.stringify(error)}</strong>}
@@ -40,9 +41,9 @@ function Projects() {
                 <Flex mt={8} p={4} key={doc.name} flexWrap='wrap'>
                     {value.map((doc, index) => (
 
-                        <Link to={`/project/projectid=${index}`}>
+                        <Link to={`/projects/${doc.NO_ID_FIELD}`} key={index}>
                             <Box
-                                key={index}
+
                                 boxShadow="md"
                                 flexGrow={1}
                                 minW={64}
@@ -71,7 +72,7 @@ function Projects() {
 
                     ))}
                     <Center boxShadow="md" m={4} rounded="sm" bg="#F8F8F8" >
-                        <IconButton onClick={onOpen} fontSize={24} p={8} w={24} minW={64} height="100%" colorScheme="gray" aria-label="create new" icon={<AddIcon />} />
+                        <IconButton onClick={onOpenNew} fontSize={24} p={8} w={24} minW={64} height="100%" colorScheme="gray" aria-label="create new" icon={<AddIcon />} />
 
                     </Center>
                     <Modal isOpen={isOpen} onClose={onClose}>
