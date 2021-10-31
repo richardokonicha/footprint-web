@@ -7,6 +7,8 @@ import {
     Link,
     useParams
 } from "react-router-dom";
+import { useCreateAppMutation } from '../services/api'
+
 
 
 function Projects() {
@@ -15,24 +17,35 @@ function Projects() {
     const { isOpen, onOpen: onOpenNew, onClose } = useDisclosure()
     const projectRef = collection(firestore, 'projects')
     const { status, data: value, error } = useFirestoreCollectionData(projectRef)
+
+    const [createApp, { isLoading: isCreateApp }] = useCreateAppMutation()
+
     const addProject = ({ name, description }: { name: string, description: string }) => {
-        addDoc(projectRef, {
-            name: name,
-            description: description,
-        }).then(
-            (value) => {
-                toast({
-                    title: "service created.",
-                    description: `${name} created`,
-                    status: "success",
-                    duration: 2000,
-                    isClosable: true,
+        const data = {
+            "name": name,
+            "stack": "cedar"
+        }
+        createApp(data)
+            .then((payload) => {
+                console.log(payload)
+                addDoc(projectRef, {
+                    name: name,
+                    description: description,
+                    ...payload
                 })
-            }
-        )
+                    .then((p) => {
+                        toast({
+                            title: "service created.",
+                            description: `${name} created`,
+                            status: "success",
+                            duration: 2000,
+                            isClosable: true,
+                        })
+                    })
+            })
+
         onClose()
     }
-    console.log(value)
     return (
         <Box>
             {error && <strong>Error: {JSON.stringify(error)}</strong>}

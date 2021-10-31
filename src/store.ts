@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { pokemonApi } from './services/herokuApi'
+import api from './services/api'
 
 export const store = configureStore({
   reducer: {
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [api.reducerPath]: api.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
