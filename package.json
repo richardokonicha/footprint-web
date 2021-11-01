@@ -18,6 +18,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.3.0",
+    "@types/uuid": "^8.3.1",
     "firebase": "^9.1.3",
     "formik": "^2.2.9",
     "framer-motion": "^4",
@@ -31,6 +32,7 @@
     "reactfire": "^4.2.0",
     "telegram": "^1.8.10",
     "typescript": "^4.1.2",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

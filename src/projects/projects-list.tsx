@@ -3,13 +3,9 @@ import { collection, addDoc, doc } from "firebase/firestore";
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { AddIcon } from '@chakra-ui/icons'
 import { Formik } from 'formik'
-import {
-    Link,
-    useParams
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCreateAppMutation } from '../services/api'
-
-
+import { v4 as uuidv4 } from 'uuid';
 
 function Projects() {
     const toast = useToast()
@@ -17,17 +13,15 @@ function Projects() {
     const { isOpen, onOpen: onOpenNew, onClose } = useDisclosure()
     const projectRef = collection(firestore, 'projects')
     const { status, data: value, error } = useFirestoreCollectionData(projectRef)
-
     const [createApp, { isLoading: isCreateApp }] = useCreateAppMutation()
 
     const addProject = ({ name, description }: { name: string, description: string }) => {
         const data = {
-            "name": name,
+            "name": `footprint-${uuidv4().slice(0, 8)}`,
             "stack": "cedar"
         }
         createApp(data)
             .then((payload) => {
-                console.log(payload)
                 addDoc(projectRef, {
                     name: name,
                     description: description,
@@ -43,7 +37,6 @@ function Projects() {
                         })
                     })
             })
-
         onClose()
     }
     return (
@@ -53,10 +46,8 @@ function Projects() {
             {status === "success" && (
                 <Flex mt={8} p={4} key={doc.name} flexWrap='wrap'>
                     {value.map((doc, index) => (
-
                         <Link to={`/projects/${doc.NO_ID_FIELD}`} key={index}>
                             <Box
-
                                 boxShadow="md"
                                 flexGrow={1}
                                 minW={64}
@@ -77,16 +68,13 @@ function Projects() {
                                     </Tag>
                                 </HStack>
                                 <Spacer />
-
-                                <Text mb={1} fontSize="xs">{doc.heroku_alias}</Text>
+                                <Text mb={1} fontSize="xs">{doc?.data?.name}</Text>
                                 <Text color="gray.500" fontSize="xs">Created on 6/6/78</Text>
                             </Box>
                         </Link>
-
                     ))}
                     <Center boxShadow="md" m={4} rounded="sm" bg="#F8F8F8" >
                         <IconButton onClick={onOpenNew} fontSize={24} p={8} w={24} minW={64} height="100%" colorScheme="gray" aria-label="create new" icon={<AddIcon />} />
-
                     </Center>
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
@@ -143,7 +131,6 @@ function Projects() {
             )
             }
         </Box >
-
     )
 }
 
