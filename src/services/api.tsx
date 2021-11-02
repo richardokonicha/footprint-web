@@ -40,8 +40,32 @@ const api = createApi({
         data: build_data
       }),
     }),
+    setConfigVars: build.mutation({
+      query: ({ name, config_vars }) => ({
+        method: 'PATCH',
+        url: `/apps/${name}/config-vars`,
+        headers: {
+          "Accept": "application/vnd.heroku+json; version=3",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${HEROKU_KEY}`
+        },
+        data: config_vars
+      }),
+    }),
+    setFormation: build.mutation({
+      query: ({ name, formation_data }) => ({
+        method: 'PATCH',
+        url: `/apps/${name}/formation`,
+        headers: {
+          "Accept": "application/vnd.heroku+json; version=3",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${HEROKU_KEY}`
+        },
+        data: formation_data
+      }),
+    }),
   }),
 });
 
-export const { useCreateAppMutation, useCreateBuildMutation } = api
+export const { useCreateAppMutation, useCreateBuildMutation, useSetConfigVarsMutation, useSetFormationMutation } = api
 export default api

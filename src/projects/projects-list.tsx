@@ -22,13 +22,11 @@ function Projects() {
             "name": `footprint-${uuidv4().slice(0, 8)}`,
             "stack": "cedar"
         }
-
         const build_data = {
             "source_blob": {
                 "url": "https://github.com/konichar/parsesig/tarball/master",
             }
         }
-
 
         createApp(data).unwrap()
             .then((payload: any) => {
@@ -61,8 +59,6 @@ function Projects() {
                     isClosable: true,
                 })
             })
-
-
         onClose()
     }
     return (

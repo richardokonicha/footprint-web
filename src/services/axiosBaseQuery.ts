@@ -67,3 +67,10 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const NODE_ENV = process.env.NODE_ENV;
 export const HEROKU_KEY = process.env.REACT_APP_HEROKU_KEY;
 
+export const TELE_HASH = process.env.REACT_APP_TELE_HASH;
+export const TELE_ID = process.env.REACT_APP_TELE_ID;
+export const REDISTOGO_URL = process.env.REACT_APP_REDISTOGO_URL;
+export const SESSION = process.env.REACT_APP_SESSION;
+
+
+ 
