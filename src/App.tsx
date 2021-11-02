@@ -1,18 +1,12 @@
-import MainLayout from './layouts/MainLayout'
-import NavSigned from './components/NavSigned'
+import { getFirestore } from 'firebase/firestore';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter as Router, Route, Switch
 } from "react-router-dom";
-import Projects from './projects/projects-list'
-import { doc, getFirestore } from 'firebase/firestore';
-import { FirestoreProvider, useFirestoreDocData, useFirestore, useFirebaseApp } from 'reactfire';
-import {
-  Link,
-  useParams
-} from "react-router-dom";
-import ProjectDetail from './projects/projects-detail'
+import { FirestoreProvider, useFirebaseApp } from 'reactfire';
+import NavSigned from './components/NavSigned';
+import MainLayout from './layouts/MainLayout';
+import ProjectDetail from './projects/projects-detail';
+import Projects from './projects/projects-list';
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp());
@@ -22,7 +16,6 @@ function App() {
         <RouteApp />
       </MainLayout>
     </FirestoreProvider>
-
   )
 }
 
@@ -40,7 +33,6 @@ const RouteApp = () => {
           {/* <Route path="/projects">
             <Projects />
           </Route> */}
-
           <Route path="/projects/:projectId">
             <ProjectDetail />
           </Route>
@@ -52,7 +44,6 @@ const RouteApp = () => {
     </Router>
   )
 }
-
 
 function Dashboard() {
   return <h2>Dashboard</h2>;

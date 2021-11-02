@@ -1,9 +1,5 @@
-
-// @ts-nocheck 
-
-
 import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery, { API_URL, HEROKU_KEY } from './axiosBaseQuery';
+import axiosBaseQuery, { API_URL, HEROKU_KEY } from './axiosBase';
 
 const api = createApi({
   reducerPath: 'api',
@@ -11,7 +7,6 @@ const api = createApi({
     baseUrl: `${API_URL}`,
   }),
   tagTypes: [
-    // 'create_app',
   ],
   refetchOnReconnect: true,
   endpoints: (build) => ({
@@ -26,7 +21,6 @@ const api = createApi({
         },
         data: data
       }),
-      // invalidatesTags: [''],
     }),
     createBuild: build.mutation({
       query: ({ name, build_data }) => ({

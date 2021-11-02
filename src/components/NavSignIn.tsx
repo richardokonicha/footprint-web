@@ -1,3 +1,6 @@
+// @ts-nocheck 
+
+
 import {
     ChevronDownIcon,
     ChevronRightIcon, CloseIcon, HamburgerIcon

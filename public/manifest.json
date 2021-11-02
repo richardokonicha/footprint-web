@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Footprint",
+  "name": "A telegram message forwarder",
   "icons": [
     {
       "src": "favicon.ico",

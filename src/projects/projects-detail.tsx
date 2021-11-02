@@ -4,7 +4,7 @@ import { doc, enableIndexedDbPersistence, increment, updateDoc, orderBy, query, 
 import { Box, Progress, Container, HStack, Text, Tag, Switch, Spacer, useToast, Button } from "@chakra-ui/react";
 import ProjectConfig from "../components/project-config";
 import { useSetConfigVarsMutation, useSetFormationMutation } from '../services/api'
-import { TELE_HASH, TELE_ID, REDISTOGO_URL, SESSION } from '../services/axiosBaseQuery';
+import { TELE_HASH, TELE_ID, REDISTOGO_URL, SESSION } from '../services/axiosBase';
 
 
 function ProjectDetail() {
