@@ -4,7 +4,7 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { AddIcon } from '@chakra-ui/icons'
 import { Formik } from 'formik'
 import { Link } from "react-router-dom";
-import { useCreateAppMutation } from '../services/api'
+import { useCreateAppMutation, useCreateBuildMutation } from '../services/api'
 import { v4 as uuidv4 } from 'uuid';
 
 function Projects() {
@@ -14,29 +14,55 @@ function Projects() {
     const projectRef = collection(firestore, 'projects')
     const { status, data: value, error } = useFirestoreCollectionData(projectRef)
     const [createApp, { isLoading: isCreateApp }] = useCreateAppMutation()
+    const [createBuild, { isLoading: isCreateBuild }] = useCreateBuildMutation()
 
-    const addProject = ({ name, description }: { name: string, description: string }) => {
+
+    const addProject = async ({ project_name, description }: { project_name: string, description: string }) => {
         const data = {
             "name": `footprint-${uuidv4().slice(0, 8)}`,
             "stack": "cedar"
         }
-        createApp(data)
-            .then((payload) => {
-                addDoc(projectRef, {
-                    name: name,
-                    description: description,
-                    ...payload
-                })
-                    .then((p) => {
-                        toast({
-                            title: "service created.",
-                            description: `${name} created`,
-                            status: "success",
-                            duration: 2000,
-                            isClosable: true,
+
+        const build_data = {
+            "source_blob": {
+                "url": "https://github.com/konichar/parsesig/tarball/master",
+            }
+        }
+
+
+        createApp(data).unwrap()
+            .then((payload: any) => {
+                createBuild({ name: data.name, build_data }).unwrap()
+                    .then((payload_build: any) => {
+                        addDoc(projectRef, {
+                            project_name: project_name,
+                            description: description,
+                            ...payload,
+                            ...payload_build
                         })
+                            .then((p) => {
+                                toast({
+                                    title: "service created.",
+                                    description: `${project_name} created`,
+                                    status: "success",
+                                    duration: 2000,
+                                    isClosable: true,
+                                })
+                            })
                     })
             })
+            .catch((e) => {
+                console.log(e)
+                toast({
+                    title: "service failed.",
+                    status: "error",
+                    description: `${e.data.message}`,
+                    duration: 2000,
+                    isClosable: true,
+                })
+            })
+
+
         onClose()
     }
     return (
@@ -79,7 +105,7 @@ function Projects() {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <Formik
-                            initialValues={{ name: '', description: '' }}
+                            initialValues={{ project_name: '', description: '' }}
                             onSubmit={(values, { setSubmitting }) => {
                                 addProject(values)
                                 setSubmitting(false);
@@ -101,12 +127,12 @@ function Projects() {
                                         <ModalBody>
                                             <Box>
                                                 <Input type="text"
-                                                    name="name"
+                                                    name="project_name"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    value={values.name}
+                                                    value={values.project_name}
                                                     placeholder="Name" mb={4} />
-                                                {errors.name && touched.name && errors.name}
+                                                {errors.project_name && touched.project_name && errors.project_name}
                                                 <Input type="text"
                                                     name="description"
                                                     onChange={handleChange}

@@ -11,7 +11,7 @@ const api = createApi({
     baseUrl: `${API_URL}`,
   }),
   tagTypes: [
-    'create_app',
+    // 'create_app',
   ],
   refetchOnReconnect: true,
   endpoints: (build) => ({
@@ -26,10 +26,22 @@ const api = createApi({
         },
         data: data
       }),
-      invalidatesTags: ['create_app'],
+      // invalidatesTags: [''],
+    }),
+    createBuild: build.mutation({
+      query: ({ name, build_data }) => ({
+        method: 'POST',
+        url: `/apps/${name}/builds`,
+        headers: {
+          "Accept": "application/vnd.heroku+json; version=3",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${HEROKU_KEY}`
+        },
+        data: build_data
+      }),
     }),
   }),
 });
 
-export const { useCreateAppMutation } = api
+export const { useCreateAppMutation, useCreateBuildMutation } = api
 export default api
