@@ -6,10 +6,23 @@ const api = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: `${API_URL}`,
   }),
-  tagTypes: [
-  ],
+  tagTypes: ["appFormation"],
   refetchOnReconnect: true,
   endpoints: (build) => ({
+
+    getAppFormation: build.query({
+      query: (name: string) => ({
+        method: 'GET',
+        url: `/apps/${name}/formation/worker`,
+        headers: {
+          "Accept": "application/vnd.heroku+json; version=3",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${HEROKU_KEY}`
+        },
+      }),
+      providesTags: ['appFormation'],
+    }),
+
     createApp: build.mutation({
       query: (data: { name: string, stack: string }) => ({
         method: 'POST',
@@ -22,6 +35,8 @@ const api = createApi({
         data: data
       }),
     }),
+
+
     createBuild: build.mutation({
       query: ({ name, build_data }) => ({
         method: 'POST',
@@ -57,9 +72,10 @@ const api = createApi({
         },
         data: formation_data
       }),
+      invalidatesTags: ['appFormation'],
     }),
   }),
 });
 
-export const { useCreateAppMutation, useCreateBuildMutation, useSetConfigVarsMutation, useSetFormationMutation } = api
+export const { useCreateAppMutation, useCreateBuildMutation, useSetConfigVarsMutation, useSetFormationMutation, useGetAppFormationQuery } = api
 export default api

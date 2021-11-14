@@ -7,6 +7,9 @@ import NavSigned from './components/NavSigned';
 import MainLayout from './layouts/MainLayout';
 import ProjectDetail from './projects/projects-detail';
 import Projects from './projects/projects-list';
+import { Box, Flex } from '@chakra-ui/react'
+import Sidebar from "./components/Sidebar/Sidebar";
+
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp());
@@ -24,23 +27,30 @@ export default App;
 const RouteApp = () => {
   return (
     <Router>
-      <div>
-        <NavSigned />
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          {/* <Route path="/projects">
+
+
+      <Flex direction="row" >
+        <Sidebar />
+        <Box flexGrow={1}>
+          <NavSigned />
+          <Switch>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            {/* <Route path="/projects">
             <Projects />
-          </Route> */}
-          <Route path="/projects/:projectId">
-            <ProjectDetail />
-          </Route>
-          <Route path="/">
-            <Projects />
-          </Route>
-        </Switch>
-      </div>
+            </Route> */}
+            <Route path="/projects/:projectId">
+              <ProjectDetail />
+            </Route>
+            <Route path="/">
+              <Projects />
+            </Route>
+          </Switch>
+
+        </Box>
+      </Flex>
+
     </Router>
   )
 }

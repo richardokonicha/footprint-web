@@ -3,9 +3,10 @@ import { useFirestore, useFirestoreDocData } from 'reactfire';
 import { doc, enableIndexedDbPersistence, increment, updateDoc, orderBy, query, addDoc } from 'firebase/firestore';
 import { Box, Progress, Container, HStack, Text, Tag, Switch, Spacer, useToast, Button } from "@chakra-ui/react";
 import ProjectConfig from "../components/project-config";
-import { useSetConfigVarsMutation, useSetFormationMutation } from '../services/api'
+import { useSetConfigVarsMutation, useSetFormationMutation, useGetAppFormationQuery } from '../services/api'
 import { TELE_HASH, TELE_ID, REDISTOGO_URL, SESSION } from '../services/axiosBase';
-
+import { Avatar, AvatarBadge, AvatarGroup, TagLabel,Divider, VStack } from "@chakra-ui/react"
+import { AddIcon } from "@chakra-ui/icons";
 
 function ProjectDetail() {
     const { projectId } = useParams<{ projectId: string }>()
@@ -16,7 +17,7 @@ function ProjectDetail() {
     const [setConfigVars, { isLoading: isSetConfigVars }] = useSetConfigVarsMutation()
     const [setFormation, { isLoading: isSetFormation }] = useSetFormationMutation()
 
-    console.log(data)
+    const { data: appData, error, isLoading: isLoadingAppData } = useGetAppFormationQuery(data?.name)
 
 
     const turnOn = async (e: any, name: string) => {
@@ -26,19 +27,19 @@ function ProjectDetail() {
                 "updates": [
                     {
                         "quantity": 1,
-                        // "size": "standard-1X",
                         "type": "worker"
                     }
                 ]
             }
             await setFormation({ name, formation_data }).unwrap()
                 .then((payload: any) => {
+                    console.log(payload, "oooo")
                     updateDoc(ref, {
                         "did": "worked",
                         ...payload,
                     })
 
-                    console.log(payload)
+                    // console.log(payload)
                 })
                 .catch((error: any) => { console.log(error) })
         } else {
@@ -84,31 +85,59 @@ function ProjectDetail() {
 
 
     return (
-        <Container maxW="container.xl" pt={4}>
+        <Container maxW="container.xl" pt={8}>
             {status === "loading" && (
                 <Progress isIndeterminate={status === 'loading'} isAnimated />
             )}
             {status === "success" && (
-                <Box shadow="md" p={4}>
-                    <HStack>
-                        <Text textTransform="capitalize" >{data?.name}</Text>
-                        <Tag size='sm' variant="solid" colorScheme="blueprint">
-                            Live
+                <Box >
+                    <HStack spacing={4} mb={4} >
+                        <Text fontSize="xl" textTransform="capitalize" >{data?.name}</Text>
+
+                        <Switch id="turn on" size='md' onChange={(value) => turnOn(value, data.name)} isChecked={appData?.quantity > 0} />
+                        <Tag size='md' variant="solid" colorScheme={appData?.quantity > 0 ? "blue" : "red"} px={4}>
+                            {appData?.quantity > 0 ? "Active" : "Dead"}
                         </Tag>
-                        <Switch id="turn on" onChange={(value) => turnOn(value, data.name)} />
                         <Spacer />
-                        <Tag size='sm' variant="solid" colorScheme="teal">
-                            Healthy
+                        <Tag size='md' variant="solid" colorScheme="blue">
+                            Authorize Telegram
                         </Tag>
                     </HStack>
-                    <Text>{data?.heroku_alias || "footprint"}</Text>
-                    <Text textTransform="capitalize">{data?.description}</Text>
+                    <Text fontSize="sm" mb={2} color="gray.400" textTransform="capitalize" >{data?.description}</Text>
 
+                    <Box minH={32} flexGrow={1} bg="gray.200" borderRadius={4} p={4} mb={8}>
+                        Loading...
+                    </Box>
+                    <Divider mb={8}/>
+
+                    <HStack mb={6} > 
+                    <Button variant="solid" size="lg" leftIcon={<AddIcon />}  onClick={configure}>Source</Button>
+                    <Spacer/>
+                    <Button variant="solid" size="lg" leftIcon={<AddIcon />} onClick={configure}>Destination</Button>
+                    </HStack>
+                    <HStack spacing={4} >
+                        <Box>
+                        <Tag size="lg" colorScheme="gray" borderRadius="full" p={2}>
+                        <Avatar name="Dan Abrahmov"  size="lg"   ml={-1}
+                                mr={2} src="https://bit.ly/dan-abramov" />
+                        <TagLabel>Dan Abrahmov</TagLabel>
+                        </Tag>
+                        </Box>
+                    <Spacer />
+
+                    <VStack>
+
+                    
+                    <Tag size="lg" colorScheme="gray" borderRadius="full"  p={2}>
+                    <Avatar name="Dan Abrahmov" size="lg" ml={-1} mr={2} src="https://bit.ly/dan-abramov" />
+                        <TagLabel mr={2}>Dan Abrahmov</TagLabel>
+                        </Tag>
+                    </VStack>
+                    </HStack>
+                    {/* <Text>{data?.heroku_alias || "footprint"}</Text> */}
                 </Box>
             )
             }
-
-            <Button variant="outline" size="lg" mt={4} onClick={configure}>configure</Button>
 
             {/* <ProjectConfig /> */}
         </Container >
